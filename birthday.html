@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Happy Birthday Amylea ❤️</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #1a1a2e, #000);
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+      }
+
+      .stars {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: url("https://www.transparenttextures.com/patterns/stardust.png");
+        z-index: -1;
+      }
+
+      .container {
+        padding: 60px 20px;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .message {
+        max-width: 650px;
+        margin: auto;
+        font-size: 20px;
+        line-height: 1.7;
+        min-height: 120px;
+      }
+
+      .counter {
+        margin-top: 20px;
+        font-size: 18px;
+        opacity: 0.9;
+      }
+
+      .gallery img {
+        width: 280px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        transition: 0.5s;
+      }
+
+      button {
+        margin-top: 40px;
+        padding: 15px 35px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        background: #ff4d6d;
+        color: white;
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .heart {
+        position: fixed;
+        top: -10vh;
+        color: red;
+        animation: fall linear forwards;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+
+      .shooting-star {
+        position: fixed;
+        width: 2px;
+        height: 80px;
+        background: white;
+        opacity: 0.7;
+        transform: rotate(45deg);
+        animation: shoot 1s linear;
+      }
+
+      @keyframes shoot {
+        from {
+          transform: translateX(-100px) translateY(-100px) rotate(45deg);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(800px) translateY(800px) rotate(45deg);
+          opacity: 0;
+        }
+      }
+
+      .cake {
+        font-size: 80px;
+        margin-top: 20px;
+        animation: pop 1s infinite alternate;
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.1);
+        }
+      }
+
+      .letter {
+        background: white;
+        color: #333;
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 500px;
+        margin: 30px auto;
+        font-size: 18px;
+      }
+
+      .visualizer {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-top: 20px;
+        height: 40px;
+      }
+
+      .bar {
+        width: 6px;
+        background: #ff4d6d;
+        height: 10px;
+        animation: equalize 1s infinite ease-in-out;
+      }
+
+      .bar:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .bar:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .bar:nth-child(4) {
+        animation-delay: 0.6s;
+      }
+      .bar:nth-child(5) {
+        animation-delay: 0.8s;
+      }
+
+      @keyframes equalize {
+        0% {
+          height: 10px;
+        }
+        50% {
+          height: 40px;
+        }
+        100% {
+          height: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="stars"></div>
+
+    <div class="container">
+      <h1>Happy Birthday Baby ❤️</h1>
+
+      <h2>For My Baby, Nur Amylea Natasya</h2>
+
+      <div id="typedText" class="message"></div>
+
+      <div class="counter">
+        Together since <span id="relationshipDays"></span> days ❤️
+      </div>
+
+      <div class="gallery">
+        <img id="galleryImage" src="IMG_20251023_202217.jpg" />
+      </div>
+
+      <div class="visualizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <button onclick="startExperience()">Open Your Surprise 🎁</button>
+
+      <div id="cake" class="cake hidden">🎂</div>
+
+      <div id="letter" class="letter hidden">
+        One day we won't celebrate your birthday through a screen anymore. I'll
+        celebrate it right next to you ❤️
+      </div>
+    </div>
+
+    <audio id="music" src="song.mp3" preload="auto"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+      /* MESSAGE */
+
+      const message = `
+Hiiii baby, happy birthday!!!
+
+Thank you for being in my life since May 2021.
+Even though we are far apart, you are always close to my heart.
+
+I hope this year brings you happiness and beautiful moments.
+
+I love you so much ❤️
+`;
+
+      let i = 0;
+
+      function typeWriter() {
+        if (i < message.length) {
+          const char = message.charAt(i);
+
+          if (char === "\n") {
+            document.getElementById("typedText").innerHTML += "<br>";
+          } else {
+            document.getElementById("typedText").innerHTML += char;
+          }
+
+          i++;
+
+          setTimeout(typeWriter, 35);
+        }
+      }
+
+      typeWriter();
+
+      /* RELATIONSHIP COUNTER */
+
+      const startDate = new Date("2021-05-23");
+
+      const diff = new Date() - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      document.getElementById("relationshipDays").innerText = days;
+
+      /* SLIDESHOW */
+
+      const images = [
+        "IMG_20251023_202217.jpg",
+        "MVIMG_20251122_110853.jpg",
+        "MVIMG_20260131_143504.jpg",
+        "IMG_20251122_103412.jpg",
+        "MVIMG_20260130_095215.jpg"
+      ];
+
+      let index = 0;
+
+      setInterval(() => {
+        index++;
+
+        if (index >= images.length) index = 0;
+
+        document.getElementById("galleryImage").src = images[index];
+      }, 3500);
+
+      /* HEART RAIN */
+
+      function createHeart() {
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+
+        heart.style.fontSize = Math.random() * 25 + 15 + "px";
+
+        heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 7000);
+      }
+
+      setInterval(createHeart, 400);
+
+      /* SHOOTING STAR */
+
+      function createStar() {
+        const star = document.createElement("div");
+
+        star.className = "shooting-star";
+
+        star.style.top = Math.random() * 50 + "vh";
+
+        star.style.left = Math.random() * 50 + "vw";
+
+        document.body.appendChild(star);
+
+        setTimeout(() => star.remove(), 1000);
+      }
+
+      setInterval(createStar, 5000);
+
+      /* HEART EXPLOSION ON CLICK */
+
+      document.addEventListener("click", (e) => {
+        for (let i = 0; i < 15; i++) {
+          confetti({
+            particleCount: 1,
+            spread: 360,
+            startVelocity: 20,
+            origin: {
+              x: e.clientX / window.innerWidth,
+              y: e.clientY / window.innerHeight,
+            },
+          });
+        }
+      });
+
+      /* EXPERIENCE */
+
+      function startExperience() {
+        startMusic();
+        showCake();
+        showLetter();
+        fireworks();
+      }
+
+      /* MUSIC */
+
+      function startMusic() {
+        const music = document.getElementById("music");
+
+        music.volume = 0;
+
+        music.loop = true;
+
+        music.play();
+
+        let fade = setInterval(() => {
+          if (music.volume < 1) {
+            music.volume += 0.05;
+          } else {
+            clearInterval(fade);
+          }
+        }, 200);
+      }
+
+      /* FIREWORKS */
+
+      function fireworks() {
+        let duration = 3000;
+
+        let end = Date.now() + duration;
+
+        (function frame() {
+          confetti({
+            particleCount: 4,
+            angle: 60,
+            spread: 60,
+            origin: { x: 0 },
+          });
+
+          confetti({
+            particleCount: 4,
+            angle: 120,
+            spread: 60,
+            origin: { x: 1 },
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }
+
+      /* CAKE */
+
+      function showCake() {
+        document.getElementById("cake").classList.remove("hidden");
+      }
+
+      /* LETTER */
+
+      function showLetter() {
+        setTimeout(() => {
+          document.getElementById("letter").classList.remove("hidden");
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
